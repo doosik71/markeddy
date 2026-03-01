@@ -7,6 +7,7 @@ import { Editor, rootCtx, defaultValueCtx } from 'https://esm.sh/@milkdown/core'
 import { commonmark } from 'https://esm.sh/@milkdown/preset-commonmark';
 import { listener, listenerCtx } from 'https://esm.sh/@milkdown/plugin-listener';
 import { nord } from 'https://esm.sh/@milkdown/theme-nord';
+import { menu, menuDefaultConfig } from 'https://esm.sh/@milkdown-lab/plugin-menu';
 
 /**
  * 1. URL에서 마크다운 데이터 복원
@@ -79,9 +80,11 @@ async function initEditor() {
           updateUrl(markdown);
         });
       })
+      .config(menuDefaultConfig) // 메뉴 플러그인 기본 설정 적용
       .use(nord) // 북유럽 테마 적용
       .use(commonmark) // 기본 마크다운 문법 적용
       .use(listener) // 상태 감지 리스너 적용
+      .use(menu) // 메뉴 툴바 적용
       .create();
 
     console.log("Markeddy Editor Ready!");

@@ -95,10 +95,10 @@ header h1 {
 /* --- Editor Layout --- */
 #editor-container {
   flex: 1;
-  overflow-y: auto;
   padding: 40px 20px;
   display: flex;
   justify-content: center;
+  overflow: hidden; /* 컨테이너 자체 스크롤은 숨기고 내부 에디터에서 스크롤 */
 }
 
 /* Milkdown Wrapper 커스텀 */
@@ -108,14 +108,89 @@ header h1 {
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  min-height: 70vh;
   border: 1px solid var(--nord4);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 부모 높이를 가득 채움 */
+  overflow: hidden;
 }
 
-/* Milkdown 내부 에디터 영역 스타일 미세 조정 */
+/* Milkdown 내부 에디터 영역 스타일 및 스크롤 설정 */
+.milkdown {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .milkdown .editor {
+  flex: 1;
   padding: 40px !important;
   outline: none;
+  overflow-y: auto !important; /* 내부 스크롤 허용 */
+}
+
+.milkdown .editor h1,
+.milkdown .editor h2,
+.milkdown .editor h3,
+.milkdown .editor h4,
+.milkdown .editor h5 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  color: darkslategray;
+}
+
+.milkdown .editor h1::before,
+.milkdown .editor h2::before,
+.milkdown .editor h3::before,
+.milkdown .editor h4::before,
+.milkdown .editor h5::before {
+  content: "";
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  background-color: whitesmoke;
+  margin-left: -1em;
+  margin-right: 0.3em;
+  margin-bottom: 0.2em;
+  border-radius: 0.2em;
+  border: lightgray solid 0.02em;
+  vertical-align: middle;
+}
+
+.milkdown .editor pre code {
+  display: block; /* 코드 블록 첫 줄 인덴트 및 스타일 문제 해결 */
+}
+
+.milkdown .editor pre {
+  border: lightgray solid 0.02em;
+}
+
+.milkdown .editor blockquote,
+.milkdown .editor pre {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.milkdown .editor blockquote {
+  padding-left: 0.5em;
+}
+
+.milkdown .editor pre {
+  padding: 0.5em;
+}
+
+.milkdown .editor ul,
+.milkdown .editor ol {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.milkdown .editor li,
+.milkdown .editor li > ul,
+.milkdown .editor li > ol {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /* --- Responsive Design --- */
@@ -125,7 +200,7 @@ header h1 {
   }
 
   #editor-container {
-    padding: 20px 10px;
+    padding: 10px; /* 모바일에서는 여백 최소화 */
   }
 
   .milkdown .editor {
@@ -133,20 +208,20 @@ header h1 {
   }
 }
 
-/* --- 유틸리티: 스크롤바 커스텀 --- */
-#editor-container::-webkit-scrollbar {
+/* --- 유틸리티: 에디터 내부 스크롤바 커스텀 --- */
+.milkdown .editor::-webkit-scrollbar {
   width: 8px;
 }
 
-#editor-container::-webkit-scrollbar-track {
-  background: var(--nord6);
+.milkdown .editor::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-#editor-container::-webkit-scrollbar-thumb {
+.milkdown .editor::-webkit-scrollbar-thumb {
   background: var(--nord3);
   border-radius: 10px;
 }
 
-#editor-container::-webkit-scrollbar-thumb:hover {
+.milkdown .editor::-webkit-scrollbar-thumb:hover {
   background: var(--nord2);
 }
